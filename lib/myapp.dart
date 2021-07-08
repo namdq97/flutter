@@ -73,6 +73,92 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       _input2Controller.text = '';
       _input1Controller.text = '';
     });
+    Navigator.pop(context);
+  }
+
+  void _onShowModal() {
+    showModalBottomSheet(
+        context: this.context,
+        builder: (context) {
+          return Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'amount'),
+                  controller: _input2Controller,
+                  onChanged: (text) {
+                    this.setState(() {
+                      // _amount = int.parse(text) ?? 0;
+                      _transaction.amount = int.parse(text) ?? 0;
+                    });
+                    print(_transaction.amount);
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'price'),
+                  controller: _input1Controller,
+                  onChanged: (text) {
+                    this.setState(() {
+                      // _price = int.parse(text) ?? 0;
+                      print('text ${text}');
+                      _transaction.price = int.parse(text) ?? 0;
+                    });
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Expanded(
+                      child: ButtonTheme(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {
+                            this._inserTrasn();
+                          },
+                          child: Text(
+                            'Add',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.blueAccent),
+                              textStyle: MaterialStateProperty.all<TextStyle>(
+                                  TextStyle(color: Colors.white))),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ButtonTheme(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.redAccent),
+                              textStyle: MaterialStateProperty.all<TextStyle>(
+                                  TextStyle(color: Colors.white))),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          );
+        });
   }
 
   @override
@@ -94,8 +180,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             tooltip: 'add',
             child: Icon(Icons.add),
             onPressed: () {
-              this._inserTrasn();
+              this._onShowModal();
             },
+            backgroundColor: Theme.of(context).primaryColor,
           ),
           body: SafeArea(
               minimum: const EdgeInsets.only(left: 20, right: 20),
@@ -130,34 +217,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   //   ),
 
                   // ),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'amount'),
-                    controller: _input2Controller,
-                    onChanged: (text) {
-                      this.setState(() {
-                        // _amount = int.parse(text) ?? 0;
-                        _transaction.amount = int.parse(text) ?? 0;
-                      });
-                      print(_transaction.amount);
-                    },
-                  ),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'price'),
-                    controller: _input1Controller,
-                    onChanged: (text) {
-                      this.setState(() {
-                        // _price = int.parse(text) ?? 0;
-                        print('text ${text}');
-                        _transaction.price = int.parse(text) ?? 0;
-                      });
-                    },
-                  ),
+
                   Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                   ButtonTheme(
                     height: 60,
                     child: TextButton(
                       onPressed: () {
-                        this._inserTrasn();
+                        this._onShowModal();
+                        // this._inserTrasn();
                         // showDialog<String>(
                         //   context: context,
                         //   builder: (BuildContext context) => AlertDialog(
@@ -178,8 +245,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                         // );
                       },
                       child: Text(
-                        'Press me',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        'Open Modal',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontFamily: 'Roboto'),
                       ),
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
