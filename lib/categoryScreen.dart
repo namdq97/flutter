@@ -9,9 +9,9 @@ class CategoryScreen extends StatelessWidget {
     return GridView(
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 300,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10),
+            childAspectRatio: 3 / 3,
+            crossAxisSpacing: 30,
+            mainAxisSpacing: 30),
         padding: EdgeInsets.all(10),
         children: DataTest.map((e) => CategoryItem(e)).toList());
   }
